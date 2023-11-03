@@ -2,7 +2,7 @@
 
 pragma solidity ^0.8.20;
 
-import {ECDSA} from "@openzeppelin/contracts/utils/cryptography/ECDSA.sol";
+import {ECDSA} from "openzeppelin/utils/cryptography/ECDSA.sol";
 
 library Signatures {
     struct Signature {

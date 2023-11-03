@@ -2,15 +2,15 @@
 
 pragma solidity ^0.8.20;
 
-import {EnumerableSet} from "@openzeppelin/contracts/utils/structs/EnumerableSet.sol";
+import {EnumerableSet} from "openzeppelin/utils/structs/EnumerableSet.sol";
 
-import {ERC1155Base} from "src/core/ERC1155/ERC1155Base/ERC1155Base.sol";
-import {ERC1155Mintable} from "src/core/ERC1155/ERC1155Mintable/ERC1155Mintable.sol";
-import {ERC1155Burnable} from "src/core/ERC1155/ERC1155Burnable/ERC1155Burnable.sol";
-import {ERC1155Redeem} from "src/core/ERC1155/ERC1155Redeem/ERC1155Redeem.sol";
-import {ERC1155Permit} from "src/core/ERC1155/ERC1155Permit/ERC1155Permit.sol";
-import {ERC1155Royalty} from "src/core/ERC1155/ERC1155Royalty/ERC1155Royalty.sol";
-import {ERC1155Notifiers} from "src/core/ERC1155/ERC1155Notifiers/ERC1155Notifiers.sol";
+import {ERC1155Base} from "src/tokens/ERC1155/ERC1155Base/ERC1155Base.sol";
+import {ERC1155Mintable} from "src/tokens/ERC1155/ERC1155Mintable/ERC1155Mintable.sol";
+import {ERC1155Burnable} from "src/tokens/ERC1155/ERC1155Burnable/ERC1155Burnable.sol";
+import {ERC1155Redeem} from "src/tokens/ERC1155/ERC1155Redeem/ERC1155Redeem.sol";
+import {ERC1155Permit} from "src/tokens/ERC1155/ERC1155Permit/ERC1155Permit.sol";
+import {ERC1155Royalty} from "src/tokens/ERC1155/ERC1155Royalty/ERC1155Royalty.sol";
+import {ERC1155Notifiers} from "src/tokens/ERC1155/ERC1155Notifiers/ERC1155Notifiers.sol";
 
 import {INotifier} from "src/core/Notifier/INotifier.sol";
 import {IOnSetApprovalForAll} from "src/notifications/OnSetApprovalForAll/IOnSetApprovalForAll.sol";

@@ -2,52 +2,44 @@
 
 pragma solidity ^0.8.20;
 
-import {AccessControlDefaultAdminRules} from
-    "@openzeppelin/contracts/access/extensions/AccessControlDefaultAdminRules.sol";
-import {EnumerableSet} from "@openzeppelin/contracts/utils/structs/EnumerableSet.sol";
+import {AccessControlDefaultAdminRules} from "openzeppelin/access/extensions/AccessControlDefaultAdminRules.sol";
+import {EnumerableSet} from "openzeppelin/utils/structs/EnumerableSet.sol";
 
-import {Collection} from "src/core/Collection/Collection.sol";
+import {Currencies} from "./Currencies.sol";
+import {Collections} from "./Collections.sol";
 
-contract Marketplace is AccessControlDefaultAdminRules {
-    using EnumerableSet for EnumerableSet.AddressSet;
-
-    EnumerableSet.AddressSet private _collections;
-
-    event CreatedCollection(address indexed collection, address indexed sender);
-    event AddedCollection(address indexed collection, address indexed sender);
-    event RemovedCollection(address indexed collection, address indexed sender);
-
-    error CollectionAlreadyIsExists();
-    error CollectionAlreadyIsNotExists();
-
+contract Marketplace is Currencies, Collections, AccessControlDefaultAdminRules {
     constructor() AccessControlDefaultAdminRules(1 days, _msgSender()) {}
 
+    function hasCurrency(address currency) external view returns (bool) {
+        return _hasCurrency(currency);
+    }
+
+    function createCurrency(string memory name, string memory symbol) public virtual {
+        _createCurrency(_msgSender(), name, symbol);
+    }
+
+    function addCurrency(address currency) public virtual onlyRole(DEFAULT_ADMIN_ROLE) {
+        _addCurrency(currency);
+    }
+
+    function removeCurrency(address currency) public virtual onlyRole(DEFAULT_ADMIN_ROLE) {
+        _removeCurrency(currency);
+    }
+
     function hasCollection(address collection) external view returns (bool) {
-        return _collections.contains(collection);
+        return _hasCollection(collection);
     }
 
-    function createCollection(string memory name, string memory uri) external {
-        address collection = address(new Collection(_msgSender(), name, uri));
-
-        _collections.add(collection);
-        emit CreatedCollection(collection, _msgSender());
+    function createCollection(string memory name, string memory uri) public virtual {
+        _createCollection(_msgSender(), name, uri);
     }
 
-    function addCollection(address collection) external onlyRole(DEFAULT_ADMIN_ROLE) {
-        if (!_collections.contains(collection)) {
-            revert CollectionAlreadyIsExists();
-        }
-
-        _collections.add(collection);
-        emit AddedCollection(collection, _msgSender());
+    function addCollection(address collection) public virtual onlyRole(DEFAULT_ADMIN_ROLE) {
+        _addCollection(collection);
     }
 
-    function removeCollection(address collection) external onlyRole(DEFAULT_ADMIN_ROLE) {
-        if (_collections.contains(collection)) {
-            revert CollectionAlreadyIsNotExists();
-        }
-
-        _collections.remove(collection);
-        emit RemovedCollection(collection, _msgSender());
+    function removeCollection(address collection) public virtual onlyRole(DEFAULT_ADMIN_ROLE) {
+        _removeCollection(collection);
     }
 }
